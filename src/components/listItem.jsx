@@ -42,8 +42,8 @@ const ListItem = ({ user }) => {
       </div>
       {isOpen && (
         <div className="mb-3.5 w-[60%] h-auto bg-[#0b83fe4d]">
-          <p className='text-[90%]'>name: {helperForString(user?.login)}</p>
-          <p className='text-[90%]'>login: {helperForString(userData?.name)}</p>
+          <p className='text-[90%]'>name: {helperForString(userData?.name)}</p>
+          <p className='text-[90%]'>login: {helperForString(user?.login)}</p>
           <p className='text-[90%]'>email: {helperForString(userData?.email)}</p>
           <p className='text-[90%]'>contributions: {helperForString(user?.contributions)}</p>
         </div>
