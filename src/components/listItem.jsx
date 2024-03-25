@@ -5,11 +5,15 @@ import { githubServices } from "../api/contributors";
 const ListItem = ({ user }) => {
   const [userData, setUserData] = useState({});
   const [isOpen, setIsOpen] = useState(false);
+  const [isUser,setIsUser] = useState('')
 
   const getData = async () => {
-    const response = await githubServices.getUsers(user?.login);
-    setUserData(response?.data);
     setIsOpen(!isOpen);
+    setIsUser(user?.login)
+    if(isUser!==user?.login) {
+      const response = await githubServices.getUsers(user?.login);
+      setUserData(response?.data);
+    }
   };
 
   const helperForString = (string) => {
