@@ -38,7 +38,7 @@ const ListItem = ({ user }) => {
       <div className="mt-3.5 gap-[10%] p-[3%] w-[60%] h-[70px] border-solid border-[2px] border-black flex flex-row justify-between items-center">
         <div className="flex flex-row items-center justify-start w-[70%] gap-[10%]">
           <div className="w-[50px] h-[50px]">
-            <a href={user?.html_url} target={"_blank"}>
+            <a href={user?.html_url}>
               <img
                 className="w-full h-full"
                 src={user?.avatar_url}
