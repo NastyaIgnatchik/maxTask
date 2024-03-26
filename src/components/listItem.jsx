@@ -7,8 +7,7 @@ const ListItem = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isUser, setIsUser] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const alert = "для получения email и name Вам необходим токен";
-  const [isError, setIsError] = useState(false);
+  const [isError, setIsError] = useState('');
 
   const getData = async () => {
     try {
@@ -18,11 +17,11 @@ const ListItem = ({ user }) => {
         setIsLoading(true);
         const response = await githubServices.getUsers(user?.login);
         setUserData(response?.data);
-        setIsError(false);
+        setIsError('');
       }
     } catch (err) {
       console.log(err);
-      setIsError(true);
+      setIsError(err?.response?.data?.message);
     }
     setIsLoading(false);
   };
@@ -70,7 +69,7 @@ const ListItem = ({ user }) => {
             <p className="text-[90%]">
               contributions: {helperForString(user?.contributions)}
             </p>
-            {isError && <p className="text-[red] text-[70%]">{alert}</p>}
+            {isError && <p className="text-[red] text-[70%]">{isError}</p>}
           </div>
         ))}
     </>
