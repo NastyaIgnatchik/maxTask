@@ -20,7 +20,7 @@ export const githubServices = {
         headers: { Authorization: "Bearer " + process.env.REACT_APP_TOKEN },
       });
     } catch (error) {
-      return error.response;
+      console.log(error);
     }
   },
 };
