@@ -1,9 +1,11 @@
 import axios from "axios";
 
-const token = "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"
+const token = "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"
 
 const userInstance = axios.create({
-  headers: {},
+  headers: {
+    "Authorization": `token ${token}`
+  }
 });
 export const githubServices = {
   async getContributors() {
@@ -18,9 +20,7 @@ export const githubServices = {
 
   async getUsers(login) {
     try {
-      return userInstance.get(`https://api.github.com/users/${login}`, {
-        headers: { "Authorization": "Bearer " + `${token}` },
-      });
+      return userInstance.get(`https://api.github.com/users/${login}`);
     } catch (error) {
       console.log(error);
     }
