@@ -17,7 +17,7 @@ export const githubServices = {
   async getUsers(login) {
     try {
       return userInstance.get(`https://api.github.com/users/${login}`, {
-        headers: { Authorization: "Bearer " + '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' },
+        headers: { Authorization: "Bearer " + process.env.REACT_APP_TOKEN },
       });
     } catch (error) {
       console.log(error);
