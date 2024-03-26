@@ -3,26 +3,37 @@ import { IoIosArrowDown } from "react-icons/io";
 import { githubServices } from "../api/contributors";
 
 const ListItem = ({ user }) => {
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState({ name: "", email: "" });
   const [isOpen, setIsOpen] = useState(false);
   const [isUser, setIsUser] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const alert = "для получения email и name Вам необходим токен";
-  const [isError, setIsError] = useState(false);
+  const alert = "для получения email Вам необходим токен";
 
-  const getData = async () => {
+  const getUserName = async () => {
     try {
-      setIsOpen(!isOpen);
-      setIsUser(user?.login);
-      if (isUser !== user?.login) {
-        setIsLoading(true);
-        const response = await githubServices.getUsers(user?.login);
-        setUserData(response?.data);
-        setIsError(false);
-      }
+      const response = await githubServices.getUsersName(user?.login);
+      setUserData({ ...userData, name: response?.data?.name });
     } catch (err) {
       console.log(err);
-      setIsError(true);
+    }
+  };
+
+  const getUserEmail = async () => {
+    try {
+      const response = await githubServices.getUsersEmail(user?.login);
+      setUserData({ ...userData, email: response?.data?.email });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getData = () => {
+    setIsOpen(!isOpen);
+    setIsUser(user?.login);
+    if (isUser !== user?.login) {
+      setIsLoading(true);
+      getUserEmail();
+      getUserName();
     }
     setIsLoading(false);
   };
@@ -70,7 +81,9 @@ const ListItem = ({ user }) => {
             <p className="text-[90%]">
               contributions: {helperForString(user?.contributions)}
             </p>
-            {isError && <p className="text-[red] text-[70%]">{alert}</p>}
+            {userData?.email === "" && (
+              <p className="text-[red] text-[70%]">{alert}</p>
+            )}
           </div>
         ))}
     </>
