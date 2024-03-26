@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { githubServices } from "../api/contributors";
 
