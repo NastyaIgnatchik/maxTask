@@ -5,18 +5,26 @@ import { githubServices } from "../api/contributors";
 const ListItem = ({ user }) => {
   const [userData, setUserData] = useState({});
   const [isOpen, setIsOpen] = useState(false);
-  const [isUser,setIsUser] = useState('');
-  const [isLoading,setIsLoading] = useState(false);
+  const [isUser, setIsUser] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const alert = "для получения email и name Вам необходим токен";
+  const [isError, setIsError] = useState(false);
 
   const getData = async () => {
-    setIsOpen(!isOpen);
-    setIsUser(user?.login)
-    if(isUser!==user?.login) {
-      setIsLoading(true)
-      const response = await githubServices.getUsers(user?.login);
-      setUserData(response?.data)
-        setIsLoading(false);
+    try {
+      setIsOpen(!isOpen);
+      setIsUser(user?.login);
+      if (isUser !== user?.login) {
+        setIsLoading(true);
+        const response = await githubServices.getUsers(user?.login);
+        setUserData(response?.data);
+        setIsError(false);
+      }
+    } catch (err) {
+      console.log(err);
+      setIsError(true);
     }
+    setIsLoading(false);
   };
 
   const helperForString = (string) => {
@@ -47,14 +55,24 @@ const ListItem = ({ user }) => {
           <IoIosArrowDown />
         </div>
       </div>
-      {isOpen && ( isLoading? <p>Loading...</p>:
-        <div className="mb-3.5 w-[60%] h-auto bg-[#0b83fe4d]">
-          <p className='text-[90%]'>name: {helperForString(userData?.name)}</p>
-          <p className='text-[90%]'>login: {helperForString(user?.login)}</p>
-          <p className='text-[90%]'>email: {helperForString(userData?.email)}</p>
-          <p className='text-[90%]'>contributions: {helperForString(user?.contributions)}</p>
-        </div>
-      )}
+      {isOpen &&
+        (isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="mb-3.5 w-[60%] h-auto bg-[#0b83fe4d]">
+            <p className="text-[90%]">
+              name: {helperForString(userData?.name)}
+            </p>
+            <p className="text-[90%]">login: {helperForString(user?.login)}</p>
+            <p className="text-[90%]">
+              email: {helperForString(userData?.email)}
+            </p>
+            <p className="text-[90%]">
+              contributions: {helperForString(user?.contributions)}
+            </p>
+            {isError && <p className="text-[red] text-[70%]">{alert}</p>}
+          </div>
+        ))}
     </>
   );
 };
