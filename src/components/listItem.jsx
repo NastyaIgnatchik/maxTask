@@ -1,18 +1,23 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { githubServices } from "../api/contributors";
 
 const ListItem = ({ user }) => {
   const [userData, setUserData] = useState({});
   const [isOpen, setIsOpen] = useState(false);
-  const [isUser,setIsUser] = useState('')
+  const [isUser,setIsUser] = useState('');
+  const [isLoading,setIsLoading] = useState(false);
 
   const getData = async () => {
     setIsOpen(!isOpen);
     setIsUser(user?.login)
     if(isUser!==user?.login) {
+      setIsLoading(true)
       const response = await githubServices.getUsers(user?.login);
       setUserData(response?.data);
+      if(response) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -44,7 +49,7 @@ const ListItem = ({ user }) => {
           <IoIosArrowDown />
         </div>
       </div>
-      {isOpen && (
+      {isOpen && ( isLoading? <p>Loading...</p>:
         <div className="mb-3.5 w-[60%] h-auto bg-[#0b83fe4d]">
           <p className='text-[90%]'>name: {helperForString(userData?.name)}</p>
           <p className='text-[90%]'>login: {helperForString(user?.login)}</p>
