@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const token = "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"
+const token = "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"
 
 const userInstance = axios.create({
   headers: {},

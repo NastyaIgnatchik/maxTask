@@ -14,10 +14,8 @@ const ListItem = ({ user }) => {
     if(isUser!==user?.login) {
       setIsLoading(true)
       const response = await githubServices.getUsers(user?.login);
-      setUserData(response?.data);
-      if(response) {
+      setUserData(response?.data)
         setIsLoading(false);
-      }
     }
   };
 
