@@ -10,17 +10,17 @@ export const githubServices = {
         "https://api.github.com/repos/koreyspace/generative-ai-for-beginners/contributors"
       );
     } catch (error) {
-      return error.response;
+      console.log(error);
     }
   },
 
   async getUsers(login) {
     try {
       return userInstance.get(`https://api.github.com/users/${login}`, {
-        headers: { Authorization: "Bearer " + process.env.REACT_APP_TOKEN },
+        headers: { Authorization: "Bearer " + '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' },
       });
     } catch (error) {
-      return error.response;
+      console.log(error);
     }
   },
 };
