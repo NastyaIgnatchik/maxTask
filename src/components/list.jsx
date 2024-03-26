@@ -6,8 +6,12 @@ const List = () => {
   const [data, setData] = useState([]);
 
   const getData = async () => {
-    const response = await githubServices.getContributors();
-    setData(response?.data);
+    try {
+      const response = await githubServices.getContributors();
+      setData(response?.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
