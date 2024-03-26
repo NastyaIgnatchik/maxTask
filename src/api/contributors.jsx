@@ -10,7 +10,7 @@ export const githubServices = {
         "https://api.github.com/repos/koreyspace/generative-ai-for-beginners/contributors"
       );
     } catch (error) {
-      return error.response;
+      console.log(error);
     }
   },
 

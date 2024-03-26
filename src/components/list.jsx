@@ -17,7 +17,7 @@ const List = () => {
   return (
     <div className="flex flex-col justify-center items-center mt-3.5">
       {data?.map((e) => (
-        <ListItem user={e} />
+        <ListItem key={e?.id} user={e} />
       ))}
     </div>
   );

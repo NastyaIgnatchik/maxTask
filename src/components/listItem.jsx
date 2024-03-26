@@ -5,11 +5,20 @@ import { githubServices } from "../api/contributors";
 const ListItem = ({ user }) => {
   const [userData, setUserData] = useState({});
   const [isOpen, setIsOpen] = useState(false);
+  const [isUser,setIsUser] = useState('');
+  const [isLoading,setIsLoading] = useState(false);
 
   const getData = async () => {
-    const response = await githubServices.getUsers(user?.login);
-    setUserData(response?.data);
     setIsOpen(!isOpen);
+    setIsUser(user?.login)
+    if(isUser!==user?.login) {
+      setIsLoading(true)
+      const response = await githubServices.getUsers(user?.login);
+      setUserData(response?.data);
+      if(response) {
+        setIsLoading(false);
+      }
+    }
   };
 
   const helperForString = (string) => {
@@ -40,10 +49,10 @@ const ListItem = ({ user }) => {
           <IoIosArrowDown />
         </div>
       </div>
-      {isOpen && (
+      {isOpen && ( isLoading? <p>Loading...</p>:
         <div className="mb-3.5 w-[60%] h-auto bg-[#0b83fe4d]">
-          <p className='text-[90%]'>name: {helperForString(user?.login)}</p>
-          <p className='text-[90%]'>login: {helperForString(userData?.name)}</p>
+          <p className='text-[90%]'>name: {helperForString(userData?.name)}</p>
+          <p className='text-[90%]'>login: {helperForString(user?.login)}</p>
           <p className='text-[90%]'>email: {helperForString(userData?.email)}</p>
           <p className='text-[90%]'>contributions: {helperForString(user?.contributions)}</p>
         </div>
